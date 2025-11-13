@@ -15,7 +15,8 @@ const Home = ({isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvaila
 
     // ye wala function toh sirf input show karne ke liye h jab navbar ka btn click ho tab
     const theScreen = () => {
-        setList((prev) => [...prev, inputVal])
+        setList((prev) => [inputVal, ...prev])
+        console.log(list);
         setMessage('Nhi hua kaam')
         setInputVal('')
         setToScreen(true) 
