@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Navbar = ({createList}) => {
   return (
     <div className={`bg-gray-900 rounded-2xl flex justify-between text-white p-5 `}>
