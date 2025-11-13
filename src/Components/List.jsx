@@ -1,11 +1,14 @@
-const List = ({list, toScreen}) => {
+const List = ({elem , toScreen, idx}) => {
   return (
-    <div className="font-bold text-5xl text-red-500">
+    <div key={idx} className="font-bold text-2xl flex gap-5">
         {toScreen ? (
-          <div className="bg-gray-900 text-white rounded p-5">
-            <h1 className="text-white "> {list} </h1>
+          <div className="bg-gray-900 w-1/2 text-white rounded p-5">
+            <h1 className="text-white "> {elem} </h1>
           </div>
         ) : ''}
+        <div className="self-center">
+            <button className="bg-blue-500  text-white px-5 py-2 rounded-2xl">Delete</button>
+        </div>
       </div>
   )
 }

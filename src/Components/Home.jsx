@@ -15,9 +15,9 @@ const Home = ({isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvaila
 
     // ye wala function toh sirf input show karne ke liye h jab navbar ka btn click ho tab
     const theScreen = () => {
-        setList([inputVal])
+        setList((prev) => [...prev, inputVal])
         setMessage('Nhi hua kaam')
-        setInputVal([])
+        setInputVal('')
         setToScreen(true) 
         setIsBtnClicked(false)
     }
@@ -27,10 +27,10 @@ const Home = ({isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvaila
             <div className='font-semibold text-2xl p-5'>
                 {isBtnClicked ? <InputSection setInputVal={setInputVal} inputVal={inputVal} theScreen={theScreen} /> : isNotesAvailable}
             </div>
-            <div>
-                {list.length>0 ? list.map((list, idx) => {
+            <div className='flex flex-col gap-5'>
+                {list.length>0 ? list.map((elem, idx) => {
                     return (
-                        <List key={idx} list={list} toScreen={toScreen}  />
+                        <List key={idx} elem={elem} toScreen={toScreen}  />
                     )
                 }) : 'Please Add Notes' }
             </div>
