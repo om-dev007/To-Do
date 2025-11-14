@@ -3,7 +3,7 @@ import List from './List'
 import InputSection from './InputSection'
 import { useState } from 'react'
 
-const Home = ({isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvailable, inputVal, setInputVal, toScreen, setToScreen, setMessage }) => {
+const Home = ({ isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvailable, inputVal, setInputVal, toScreen, setToScreen, setMessage }) => {
 
     const [list, setList] = useState([])
 
@@ -13,15 +13,19 @@ const Home = ({isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvaila
         setIsNotesAvailable('Please Add Your Notes..')
     }
 
+    const deleteNote = (indexToRemove) => {
+        setList((prev) => prev.filter((_, i) => i!==indexToRemove) )
+    }
+
     // ye wala function toh sirf input show karne ke liye h jab navbar ka btn click ho tab
     const theScreen = () => {
         setList((prev) => [inputVal, ...prev])
-        console.log(list);
         setMessage('Nhi hua kaam')
         setInputVal('')
-        setToScreen(true) 
+        setToScreen(true)
         setIsBtnClicked(false)
     }
+    
     return (
         <div>
             <Navbar createList={navBtnClicked} />
@@ -29,13 +33,15 @@ const Home = ({isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvaila
                 {isBtnClicked ? <InputSection setInputVal={setInputVal} inputVal={inputVal} theScreen={theScreen} /> : isNotesAvailable}
             </div>
             <div className='flex flex-col gap-5'>
-                {list.length>0 ? list.map((elem, idx) => {
+                {list.length > 0 ? list.map((elem, idx) => {
                     return (
-                        <List key={idx} elem={elem} toScreen={toScreen}  />
+                        <List key={idx} elem={elem} toScreen={toScreen} deleteNote={() => deleteNote(idx)} />
                     )
-                }) : 'Please Add Notes' }
+                }) : 'Please Add Notes'}
             </div>
-            {/* <List list={list} toScreen={toScreen}  /> */}
+            <div>
+
+            </div>
         </div>
     )
 }

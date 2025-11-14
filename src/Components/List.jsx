@@ -1,4 +1,5 @@
-const List = ({elem , toScreen, idx}) => {
+const List = ({elem , toScreen, idx, deleteNote}) => {
+
   return (
     <div key={idx} className="font-bold text-2xl flex gap-5">
         {toScreen ? (
@@ -7,7 +8,7 @@ const List = ({elem , toScreen, idx}) => {
           </div>
         ) : ''}
         <div className="self-center">
-            <button className="bg-blue-500  text-white px-5 py-2 rounded-2xl">Delete</button>
+            <button onClick={deleteNote} className="bg-blue-500 hover:scale-105 transition-all cursor-pointer text-white px-5 py-2 rounded-2xl">Delete</button>
         </div>
       </div>
   )
