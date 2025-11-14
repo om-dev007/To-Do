@@ -1,11 +1,9 @@
-import React from 'react'
-
 const InputSection = ({inputVal, setInputVal, theScreen}) => {
 
      // ye toh ui h tab show hoga jab isBtnClicked true hoga toh ye wali function uske liye h ki jab jab btn pe click ho tab tab ek input or uske sath save ka btn aa jaye taki user ka input ko store karke ui me show kar sake as a note
 
     return (
-        <div className="flex gap-5">
+        <div className="flex gap-5 flex-wrap ">
             <div className="">
                 <input value={inputVal} onChange={(e) => {
                     setInputVal(e.target.value) // ye toh input ko set kar dega state me  
