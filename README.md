@@ -1,16 +1,115 @@
-# React + Vite
+# 📝 To-Do App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A minimal and clean **To-Do / Notes application** built using **React + Tailwind CSS**. Users can easily **add**, **edit**, and **delete** notes with a smooth and simple UI. Perfect beginner-friendly project for learning React hooks and component structure.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+### ✔ Add Notes
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Add a new note using the input field. The note appears instantly in the UI.
 
-## Expanding the ESLint configuration
+### ✔ Edit Notes
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Click the edit button to modify any existing note.
+
+### ✔ Delete Notes
+
+Remove notes instantly using the delete button.
+
+### ✔ Tailwind-Powered UI
+
+Clean, responsive, and fast UI styled using **Tailwind CSS**.
+
+---
+
+## 📦 Tech Stack
+
+* **React** (Vite)
+* **Tailwind CSS**
+* **JavaScript (ES6)**
+* **Vercel** (Deployment)
+
+---
+
+## 🔗 Live Demo
+
+👉 **[https://temp-to-do.vercel.app/](https://temp-to-do.vercel.app/)**
+
+---
+
+## 🧩 How It Works
+
+### 1️⃣ Add Note
+
+* Click the **Add Note** button in the navbar.
+* Input field appears.
+* Type your note → click **Save**.
+* Note is added to the list.
+
+### 2️⃣ Edit Note
+
+* Click the **Edit** icon on a note.
+* Note text loads back into the input.
+* Update → **Save**.
+* Note updates immediately.
+
+### 3️⃣ Delete Note
+
+* Click **Delete** on any note.
+* Note is removed instantly.
+
+---
+
+## 📁 Folder Structure
+
+```
+/src
+ ├── components/
+ │     ├── Navbar.jsx
+ │     ├── NoteCard.jsx
+ │     └── InputBox.jsx
+ ├── App.jsx
+ ├── index.jsx
+ ├── main.css (Tailwind)
+```
+
+---
+
+## 🛠 Installation & Setup
+
+### 1️⃣ Clone the repository
+
+```
+git clone https://github.com/om-dev007/To-Do
+cd To-Do
+```
+
+### 2️⃣ Install dependencies
+
+```
+npm install
+```
+
+### 3️⃣ Run the development server
+
+```
+npm run dev
+```
+
+---
+
+## 🔮 Future Improvements
+
+* Search notes
+* Color tags / categories
+* Color tags / categories
+
+---
+
+## 👤 Author
+
+Made with ❤️ by **Om Dev**
+
+GitHub Repo: **[https://github.com/om-dev007/To-Do](https://github.com/om-dev007/To-Do)**
