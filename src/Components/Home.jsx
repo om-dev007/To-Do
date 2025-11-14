@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from 'react'
 
 const Home = ({ isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvailable, inputVal, setInputVal, toScreen, setToScreen, setMessage }) => {
 
-    // load initial from localStorage and normalize old formats (strings -> {id, text})
     const [list, setList] = useState(() => {
         try {
             const raw = localStorage.getItem('notes_app_list')
@@ -27,51 +26,67 @@ const Home = ({ isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvail
     })
     const [error, setError] = useState('')
     const errorTimerRef = useRef(null)
+    const [editId, setEditId] = useState(null)
 
-    // if there are notes on mount, show them
     useEffect(() => {
         if (list.length > 0) setToScreen(true)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []) // run once on mount
+    }, []) 
 
-    // persist to localStorage
     useEffect(() => {
         try {
             localStorage.setItem('notes_app_list', JSON.stringify(list))
-        } catch {}
+        } catch (error) {
+            console.error('Failed to save notes to localStorage:', error)
+        }
     }, [list])
 
-    // show input field
     const navBtnClicked = () => {
         setIsBtnClicked(true)
         setIsNotesAvailable('Your notes..')
+        setEditId(null) 
     }
 
-    // delete by id (immutable)
     const deleteNote = (idToRemove) => {
         setList(prev => prev.filter(item => item.id !== idToRemove))
+        if (editId === idToRemove) {
+            setEditId(null)
+            setInputVal('')
+            setIsBtnClicked(false)
+        }
     }
 
-    // save note (validate + add with unique id)
+    const startEdit = (note) => {
+        setEditId(note.id)
+        setInputVal(note.text)
+        setIsBtnClicked(true)
+        setToScreen(true)
+        setIsNotesAvailable('Editing note...')
+    }
+
     const theScreen = () => {
         const text = (inputVal || '').trim()
         if (!text) {
-            // show temporary error
             setError('Please enter a note before saving.')
             if (errorTimerRef.current) clearTimeout(errorTimerRef.current)
             errorTimerRef.current = setTimeout(() => setError(''), 3000)
             return
         }
 
-        const newNote = { id: Date.now() + Math.floor(Math.random() * 1000), text }
-        setList(prev => [newNote, ...prev])
-        setMessage('Note added')
+        if (editId) {
+            setList(prev => prev.map(item => item.id === editId ? { ...item, text } : item))
+            setMessage('Note updated')
+            setEditId(null)
+        } else {
+            const newNote = { id: Date.now() + Math.floor(Math.random() * 1000), text }
+            setList(prev => [newNote, ...prev])
+            setMessage('Note added')
+        }
+
         setInputVal('')
         setToScreen(true)
         setIsBtnClicked(false)
     }
 
-    // cleanup timer on unmount
     useEffect(() => {
         return () => {
             if (errorTimerRef.current) clearTimeout(errorTimerRef.current)
@@ -79,20 +94,29 @@ const Home = ({ isBtnClicked, setIsBtnClicked, isNotesAvailable, setIsNotesAvail
     }, [])
 
     return (
-        <div>
+        <div className="space-y-4">
             <Navbar createList={navBtnClicked} />
-            <div className='font-semibold text-2xl p-5'>
-                {isBtnClicked ? <InputSection setInputVal={setInputVal} inputVal={inputVal} theScreen={theScreen} /> : isNotesAvailable}
+            <div className='font-semibold text-2xl p-2'>
+                {isBtnClicked
+                  ? <InputSection setInputVal={setInputVal} inputVal={inputVal} theScreen={theScreen} isEditing={!!editId} />
+                  : (list.length > 0 ? 'Your notes..' : isNotesAvailable)
+                }
             </div>
 
             {error && <div className="text-red-500 font-medium p-2">{error}</div>}
 
-            <div className='flex flex-col gap-5'>
+            <div className='flex flex-col gap-4'>
                 {list.length > 0 ? list.map((elem) => {
                     return (
-                        <List key={elem.id} elem={elem} toScreen={toScreen} onDelete={() => deleteNote(elem.id)} />
+                        <List
+                          key={elem.id}
+                          elem={elem}
+                          toScreen={toScreen}
+                          onDelete={() => deleteNote(elem.id)}
+                          onEdit={() => startEdit(elem)}
+                        />
                     )
-                }) : 'Please Add a note'}
+                }) : <div className="text-gray-600">Please Add a note</div>}
             </div>
         </div>
     )
